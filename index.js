@@ -7,6 +7,11 @@ exports.handler = function(event, context, callback){
     alexa.execute();
 };
 
+var states = {
+  GUESSMODE: '_GUESSMODE',
+  STARTMODE: '_STARTMODE'
+};
+
 var handlers = {
 
     'HelloWorldIntent': function () {
