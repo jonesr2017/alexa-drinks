@@ -19,6 +19,34 @@ var newSessionHandlers = {
   }
 };
 
+var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE,{
+  'NewSession': function() {
+    this.handler.state = '';
+    this.emitWithState('NewSession'); // Equivalent to the Start Mode new session handler
+  },
+
+  'NumberGuessIntent': function() {
+        var guessNum = parseInt(this.event.request.intent.slots.number.value);
+        var targetNum = this.attributes['guessNumber'];
+
+        console.log('user guessed: ' + guessNum);
+
+        if(guessNum > targetNum){
+            this.emit('TooHigh', guessNum);
+        } else if( guessNum < targetNum){
+            this.emit('TooLow', guessNum);
+        } else if (guessNum === targetNum){
+            // With a callback, use the arrow function to preserve the correct 'this' context
+            this.emit('JustRight', () => {
+                this.emit(':ask', guessNum.toString() + 'is correct! Would you like to play a new game?',
+                'Say yes to start a new game, or no to end the game.');
+            });
+        } else {
+            this.emit('NotANum');
+        }
+    }
+})
+
 var handlers = {
 
     'HelloWorldIntent': function () {
