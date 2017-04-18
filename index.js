@@ -3,7 +3,7 @@ var Alexa = require('alexa-sdk');
 
 exports.handler = function(event, context, callback){
     var alexa = Alexa.handler(event, context);
-    alexa.registerHandlers(handlers);
+    alexa.registerHandlers(newSessionHandlers, guessModeHandlers, handlers);
     alexa.execute();
 };
 
@@ -45,7 +45,7 @@ var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE,{
             this.emit('NotANum');
         }
     }
-})
+});
 
 var handlers = {
 
