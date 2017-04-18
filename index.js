@@ -12,6 +12,13 @@ var states = {
   STARTMODE: '_STARTMODE'
 };
 
+var newSessionHandlers = {
+  'NewSession': function() {
+    this.handler.state = states.STARTMODE;
+    this.emit(':ask', 'Welcome to the Number Game. Would you like to play?')
+  }
+};
+
 var handlers = {
 
     'HelloWorldIntent': function () {
