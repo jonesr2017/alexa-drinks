@@ -52,6 +52,17 @@ var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
     this.emit('NewSession');
   },
 
+  'AMAZON.HelpIntent': function() {
+    var message = "This is the help message";
+    this.emit(':ask', message, message);
+  },
+
+  'AMAZON.YesIntent': function() {
+    this.attributes['guessNumber'] = Math.floor(Math.random() * 100);
+    this.handler.state = states.GUESSMODE;
+    this.emit(':ask', 'Great! ' + 'Try saying a number to start the game.', 'Try saying a number.');
+  }
+
 
 });
 
