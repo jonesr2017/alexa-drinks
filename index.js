@@ -47,6 +47,14 @@ var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE,{
     }
 });
 
+var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
+  'NewSession': function() {
+    this.emit('NewSession');
+  },
+
+
+});
+
 var handlers = {
 
     'HelloWorldIntent': function () {
