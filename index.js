@@ -19,7 +19,8 @@ var newSessionHandlers = {
   }
 };
 
-var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE,{
+var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE, {
+
   'NewSession': function() {
     this.handler.state = '';
     this.emitWithState('NewSession'); // Equivalent to the Start Mode new session handler
@@ -44,7 +45,23 @@ var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE,{
         } else {
             this.emit('NotANum');
         }
+    },
+
+    'AMAZON.HelpIntent': function() {
+        this.emit(':ask', 'I am thinking of a number between zero and one hundred, try to guess and I will tell you' +
+            ' if it is higher or lower.', 'Try saying a number.');
+    },
+
+    'SessionEndedRequest': function () {
+       console.log('session ended!');
+       this.attributes['endedSessionCount'] += 1;
+       this.emit(':saveState', true); // Be sure to call :saveState to persist your session attributes in DynamoDB
+   },
+
+   'Unhandled': function() {
+        this.emit(':ask', 'Sorry, I didn\'t get that. Try saying a number.', 'Try saying a number.');
     }
+
 });
 
 var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
