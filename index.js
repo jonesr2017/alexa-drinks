@@ -33,10 +33,11 @@ var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE, {
         console.log('user guessed: ' + guessNum);
 
         if(guessNum > targetNum){
-            this.emit('TooHigh', guessNum);
+            this.emit(':tell', 'Too high');
         } else if( guessNum < targetNum){
-            this.emit('TooLow', guessNum);
+            this.emit(':tell', 'Too low');
         } else if (guessNum === targetNum){
+            //this.emit(':tell', 'you got it');
             // With a callback, use the arrow function to preserve the correct 'this' context
             this.emit('JustRight', () => {
                 this.emit(':ask', guessNum.toString() + 'is correct! Would you like to play a new game?',
